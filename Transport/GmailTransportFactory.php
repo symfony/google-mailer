@@ -9,9 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Mailer\Bridge\Google\Factory;
+namespace Symfony\Component\Mailer\Bridge\Google\Transport;
 
-use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 use Symfony\Component\Mailer\Exception\UnsupportedSchemeException;
 use Symfony\Component\Mailer\Transport\AbstractTransportFactory;
 use Symfony\Component\Mailer\Transport\Dsn;
@@ -25,7 +24,7 @@ final class GmailTransportFactory extends AbstractTransportFactory
     public function create(Dsn $dsn): TransportInterface
     {
         if ('smtp' === $dsn->getScheme()) {
-            return new GmailTransport($this->getUser($dsn), $this->getPassword($dsn), $this->dispatcher, $this->logger);
+            return new GmailSmtpTransport($this->getUser($dsn), $this->getPassword($dsn), $this->dispatcher, $this->logger);
         }
 
         throw new UnsupportedSchemeException($dsn, ['smtp']);
